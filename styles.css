@@ -9,6 +9,10 @@ body {
   border-style: solid;
   margin: 0;
   padding: 0;
+
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
 }
 
 .anchor {
@@ -22,5 +26,20 @@ body {
     position: absolute;
     height: 30px;
     border-style: solid;
-    cursor: move;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+.close-button {
+    border-radius: 100%;
+    margin-right: 10px;
+    background-color: tomato;
+    border: none;
+    width: 15px;
+    height: 15px;
 }

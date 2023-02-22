@@ -5,6 +5,7 @@ import Topbar from "./Topbar.js";
 export default class ResizableDiv {
     constructor(parent,x,y,width,height) {
         this.parent = parent,
+
         this.x = x;
         this.y = y;
         this.width = width;
@@ -54,6 +55,10 @@ export default class ResizableDiv {
     move(xOffset,yOffset) {
         this.div.style.left = intToPx(this.x - xOffset);
         this.div.style.top = intToPx(this.y - yOffset);
+    }
+
+    close() {
+        this.div.remove();
     }
 
     setInnerHTML(htmlString) {

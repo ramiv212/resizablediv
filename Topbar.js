@@ -1,10 +1,9 @@
 import { intToPx,pxToInt } from "./helpers.js";
 
+
 export default class Topbar {
     constructor(parent) {
         this.parent = parent;
-
-        this.x = 
 
         this.div = document.createElement('div');
         this.div.className = 'topbar';
@@ -13,7 +12,19 @@ export default class Topbar {
         this.div.style.bottom = intToPx(parent.height);
         this.div.draggable = 'true';
 
+        // title?
+        // this.div.innerHTML = innedHTML;
         this.parent.div.append(this.div);
+
+        // close button
+        this.closeButton = document.createElement('button');
+        this.closeButton.className = "close-button";
+
+        this.closeButton.addEventListener('click',(e) => {
+            this.parent.close();
+        })
+        
+        this.div.append(this.closeButton);
 
         this.dragEventListener();
 
