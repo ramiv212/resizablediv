@@ -13,7 +13,7 @@ body {
 
 .anchor {
   position: absolute;
-  border-style: solid;
+  border-style: none;
   border-radius: 50%;
   cursor: se-resize;
 }
