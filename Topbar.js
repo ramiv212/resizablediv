@@ -1,32 +1,27 @@
-import { intToPx,pxToInt } from "./helpers.js"
+import { intToPx,pxToInt } from "./helpers.js";
 
-export default class Anchor {
-
-    constructor(parent,width,height,position) {
-        this.width = width;
-        this.height = height;
-        this.position = position;
-
+export default class Topbar {
+    constructor(parent) {
         this.parent = parent;
 
-        // create div object and style it 
+        this.x = 
+
         this.div = document.createElement('div');
-        this.div.className = 'anchor';
+        this.div.className = 'topbar';
 
-        // size box to values passed down in args
-        this.div.style.width = intToPx(this.width);
-        this.div.style.height = intToPx(this.height);
+        this.div.style.width = intToPx(parent.width);
+        this.div.style.bottom = intToPx(parent.height);
+        this.div.draggable = 'true';
 
-        // make it draggable
-        this.div.draggable = "true";
-
-        // add div to to the parent element
         this.parent.div.append(this.div);
 
-
-        this.setPosition();
         this.dragEventListener();
 
+    }
+
+    resize() {
+        this.div.style.width = this.parent.computedStyle.width;
+        this.div.style.bottom = this.parent.computedStyle.height;
     }
 
     setPosition() {
@@ -84,7 +79,7 @@ export default class Anchor {
             let yOffset = initialMousePosition.y - e.y;
 
             // scale the parent div by the offset between the initial position of the mouse and it's current position
-            this.parent.scale(xOffset,yOffset);
+            this.parent.move(xOffset,yOffset);
 
             // set the position of this anchor to mouse position as you drag
             this.setPosition(e.x,e.y);

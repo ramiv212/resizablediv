@@ -3,5 +3,5 @@ export function intToPx(int) {
 }
 
 export function pxToInt(px) {
-    return px.replace("px","");
+    return parseInt(px.replace("px",""));
 }

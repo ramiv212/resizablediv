@@ -17,3 +17,10 @@ body {
   border-radius: 50%;
   cursor: se-resize;
 }
+
+.topbar {
+    position: absolute;
+    height: 30px;
+    border-style: solid;
+    cursor: move;
+}
