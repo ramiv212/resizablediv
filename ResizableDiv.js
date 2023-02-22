@@ -1,6 +1,7 @@
 import { pxToInt,intToPx } from "./helpers.js";
 import Anchor from "./Anchor.js";
 import Topbar from "./Topbar.js";
+import { Toolbar,ToolbarButton } from "./Toolbar.js";
 
 export default class ResizableDiv {
     constructor(parent,x,y,width,height) {
@@ -37,6 +38,15 @@ export default class ResizableDiv {
 
         // create the topbar
         this.Topbar = new Topbar(this);
+
+        // create Toolbar buttons
+        const buttons = [
+            new ToolbarButton(),
+            new ToolbarButton(),
+        ]
+
+        // create the toolbar
+        this.Toolbar = new Toolbar(this,buttons);
 
         this.setInnerHTML(`
             <h1>Hello</h1>
