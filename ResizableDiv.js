@@ -66,6 +66,10 @@ export default class ResizableDiv {
         this.div.remove();
     }
 
+    focus() {
+        this.div.style.zIndex = (parseInt(this.div.style.zIndex) + 1).toString();
+    }
+
     setInnerHTML(htmlString) {
         let innerDiv = document.createElement('div');
         this.div.append(innerDiv);
