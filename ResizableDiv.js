@@ -39,14 +39,8 @@ export default class ResizableDiv {
         // create the topbar
         this.Topbar = new Topbar(this);
 
-        // create Toolbar buttons
-        const buttons = [
-            new ToolbarButton(),
-            new ToolbarButton(),
-        ]
-
         // create the toolbar
-        this.Toolbar = new Toolbar(this,buttons);
+        this.Toolbar = new Toolbar(this);
 
         this.setInnerHTML(`
             <h1>Hello</h1>
@@ -59,6 +53,7 @@ export default class ResizableDiv {
         this.div.style.height = intToPx(this.height - yOffset);
 
         this.Topbar.resize();
+        this.Toolbar.resize();
 
     }
 

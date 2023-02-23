@@ -29,3 +29,12 @@ NOTE: I was thinking of naming this ImpostorSyndromeOS but I felt like it didn't
 PretendOS is good because it can have the dual meaning of this pretending to be a framework and me pretending to be a developer.
 
 NOTE: In my list of programming languages to learn, Markdown is pretty low in priority. Is it even type-safe?
+
+
+NOTE: This framework is meant to be pretty opinionated... like my wife. Badum-tsss. (pls don't show her this)(love you bby <3).
+
+NOTE: I'm a Primagen simp. Notice me senpai.
+
+
+Right now a window is customzed by passing down variables. Eventually I will make it an object, because it will be too many
+variables. 

@@ -2,4 +2,4 @@ import ResizableDiv from "./ResizableDiv.js";
 
 const app = document.getElementById('app');
 
-const resizable = new ResizableDiv(app,300,300,600,400)
+const resizable = new ResizableDiv(app,300,300,800,400)

@@ -55,11 +55,31 @@ body {
 
 .toolbar {
     position: absolute;
-    height: 50px;
+    height: 40px;
+    width: inherit;
+    border-bottom-style: solid;
+    border-bottom-width: .5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.topbar-button {
-    height: 40px;
-    border-style: inset;
-    border-radius: 1px;
+.toolbar-inner {
+    width: 95%;
+    display: flex;
+    align-items: center;
+}
+
+.toolbar-button {
+    height: 35px;
+    width: 35px;
+    border: none;
+    background-color: transparent;
+}
+
+.toolbar-button-img {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
