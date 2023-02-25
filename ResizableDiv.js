@@ -1,11 +1,14 @@
 import { pxToInt,intToPx } from "./helpers.js";
 import Anchor from "./Anchor.js";
 import Topbar from "./Topbar.js";
-import { Toolbar,ToolbarButton } from "./Toolbar.js";
+import { Toolbar } from "./Toolbar.js";
 
 export default class ResizableDiv {
-    constructor(parent,x,y,width,height) {
+    constructor(parent,x,y,width,height,windows,buttons) {
         this.parent = parent,
+
+        // this is an array that contains all of the active windows inside
+        this.windows = windows;
 
         this.x = x;
         this.y = y;
@@ -40,11 +43,14 @@ export default class ResizableDiv {
         this.Topbar = new Topbar(this);
 
         // create the toolbar
-        this.Toolbar = new Toolbar(this);
+        this.Toolbar = new Toolbar(this,buttons);
 
-        this.setInnerHTML(`
-            <h1>Hello</h1>
-        `)
+        // add a click event listener to focus on the window
+        
+
+        // this.setInnerHTML(`
+        //     <h1>Hello</h1>
+        // `)
 
     }
 
@@ -67,7 +73,7 @@ export default class ResizableDiv {
     }
 
     focus() {
-        this.div.style.zIndex = (parseInt(this.div.style.zIndex) + 1).toString();
+        
     }
 
     setInnerHTML(htmlString) {

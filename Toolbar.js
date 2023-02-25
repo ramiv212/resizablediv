@@ -3,27 +3,42 @@ import { intToPx,pxToInt } from "./helpers.js"
 const button1Image = 'left-arrow.svg';
 const button2Image = 'right-arrow.svg';
 
+export class ToolbarButtonChild {
+    constructor() {
+        
+    }
+}
+
 
 export class ToolbarButton {
-    constructor(parent,buttonImage,description,onClick) {
+    constructor(parent,innerContent,description,onClick,className) {
         this.parent = parent;
 
-        this.buttonImage = buttonImage;
+        this.innerContent = innerContent;
         this.description = description;
 
         this.element = document.createElement('button');
-        this.element.className = 'toolbar-button';
+        this.element.className = className;
 
         this.parent.append(this.element);
 
-        // add passed down image to button
-        this.element.innerHTML = `<img src="/static/svgs/${this.buttonImage}" alt=${this.description} class="toolbar-button-img">`;
+        this.validateInnerContent(this.innerContent);
 
         // execute function passed down by user
         this.element.addEventListener('click',() => {
             onClick();
         })
         
+    }
+
+    validateInnerContent(innerContent) {
+        // if this is a string of text and not a reference to an .svg image
+        if (innerContent.search('.svg') === -1) {
+            this.element.innerText = innerContent;
+        } else {
+            // add passed down image to button
+        this.element.innerHTML = `<img src="/static/svgs/${this.innerContent}" alt=${this.description} class="toolbar-button-img">`;
+        }
     }
 }
 
@@ -45,7 +60,7 @@ class Navbar {
 
 
 export class Toolbar {
-    constructor(parent,description) {
+    constructor(parent,buttons) {
         this.parent = parent;
 
         this.div = document.createElement('div');
@@ -60,10 +75,10 @@ export class Toolbar {
         this.parent.div.append(this.div);
         this.div.append(this.innerDiv);
 
-
         // create button image and append it to button div
-        this.button1 = new ToolbarButton(this.innerDiv,button1Image,'Back',() => console.log('click'));
-        this.button1 = new ToolbarButton(this.innerDiv,button2Image,'Back',() => console.log('click'));
+        // this.button1 = new ToolbarButton(this.innerDiv,button1Image,'Back',() => console.log('click'));
+        // this.button1 = new ToolbarButton(this.innerDiv,button2Image,'Back',() => console.log('click'));
+        this.renderButtons(buttons);
 
         // create a navbar
         this.navBar = new Navbar(this.innerDiv);
@@ -72,6 +87,19 @@ export class Toolbar {
     resize() {
         this.div.style.width = this.parent.computedStyle.width;
         this.div.style.bottom = intToPx(pxToInt(this.parent.computedStyle.height)- 40);
+    }
+
+    // buttons are passed down as an object of objects
+    renderButtons(buttons) {
+        buttons && buttons.forEach((button) => {
+            new ToolbarButton(
+                this.innerDiv,
+                button.innerContent,
+                button.description,
+                button.function,
+                button.className,
+            )
+        })
     }
     
 }

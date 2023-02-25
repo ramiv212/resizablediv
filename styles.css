@@ -40,7 +40,7 @@ body {
     align-items: center;
     justify-content: right;
 
-    background-color: white;
+    background-color: rgb(239,239,239);
 
 }
 
@@ -63,7 +63,7 @@ body {
 }
 
 .toolbar-inner {
-    width: 95%;
+    width: 90%;
     display: flex;
     align-items: center;
 }
@@ -76,7 +76,7 @@ body {
 }
 
 .toolbar-button-img {
-    width: 95%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -89,4 +89,19 @@ body {
 
 .navbar-input-field {
     width: 100%;
+}
+
+.textapp-textarea {
+    width: 90%;
+    height: 70%;
+    resize: none;
+    border: none;
+}
+
+.toolbar-named-button {
+    min-width: 60px;
+    height: 25px;
+    margin-right: 10px;
+    border: none;
+    background-color: ;
 }
