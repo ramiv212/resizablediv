@@ -4,7 +4,7 @@ import Topbar from "./Topbar.js";
 import { Toolbar } from "./Toolbar.js";
 
 export default class ResizableDiv {
-    constructor(parent,x,y,width,height,windows,buttons) {
+    constructor(parent,x,y,width,height,windows,buttons,hasNavbar) {
         this.parent = parent,
 
         // this is an array that contains all of the active windows inside
@@ -43,7 +43,7 @@ export default class ResizableDiv {
         this.Topbar = new Topbar(this);
 
         // create the toolbar
-        this.Toolbar = new Toolbar(this,buttons);
+        this.Toolbar = new Toolbar(this,buttons,hasNavbar);
 
         // add a click event listener to focus on the window
         

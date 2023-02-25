@@ -1,8 +1,8 @@
 import ResizableDiv from "../../ResizableDiv.js";
 
 export default class Textapp extends ResizableDiv {
-    constructor(parent,x,y,width,height,windows,buttons){
-        super(parent,x,y,width,height,windows,buttons);
+    constructor(parent,x,y,width,height,windows,buttons,hasNavbar){
+        super(parent,x,y,width,height,windows,buttons,hasNavbar);
 
         
         this.textBox = document.createElement('textarea');
