@@ -1,6 +1,9 @@
 import ResizableDiv from "./ResizableDiv.js";
 import Textapp from "./apps/Textapp/Textapp.js";
 
+
+
+
 export default class Main {
     constructor() {
         this.app = document.getElementById('app');

@@ -4,8 +4,7 @@ import Topbar from "./Topbar.js";
 import { Toolbar } from "./Toolbar.js";
 
 export default class ResizableDiv {
-    constructor(parent,x,y,width,height,windows,buttons,hasNavbar) {
-        this.parent = parent,
+    constructor({x,y,width,height,windows,buttons,hasNavbar}) {
 
         // this is an array that contains all of the active windows inside
         this.windows = windows;
@@ -30,9 +29,6 @@ export default class ResizableDiv {
         // make sure this div does not get sized too small
         this.div.style.minWidth = intToPx(this.width / 1.5);
         this.div.style.minHeight = intToPx(this.height / 1.5);
-
-        // add div to to the parent element
-        this.parent.append(this.div);
 
         this.computedStyle = getComputedStyle(this.div);
 
@@ -80,5 +76,10 @@ export default class ResizableDiv {
         let innerDiv = document.createElement('div');
         this.div.append(innerDiv);
         innerDiv.innerHTML = htmlString;
+    }
+
+    // add div to to the parent element
+    render(parent) {
+        parent.append(this.div);
     }
 }
