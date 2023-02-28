@@ -15,17 +15,8 @@ export default class Main {
         };
     }
 
-    createNewWindow(parent,properties) {
-            const newWindow = new Textapp(
-                parent,
-                properties.x,
-                properties.y,
-                properties.width,
-                properties.height,
-                this.windows,
-                properties.buttons,
-                properties.hasNavbar,
-            );
-    
+    createNewWindow(parent,properties = {}) {
+        let newWindow = new ResizableDiv();
+        return newWindow;
     }
 }

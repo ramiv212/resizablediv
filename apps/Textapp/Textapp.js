@@ -1,6 +1,6 @@
 import ResizableDiv from "../../ResizableDiv.js";
 
-const buttons = [
+const toolbar = [
     {
     innerContent : "File",
     description: "File",
@@ -40,7 +40,7 @@ const textAppWindowProperties = {
     y: 300,
     width: 800,
     height: 400,
-    buttons: buttons,
+    toolbar: toolbar,
     hasNavbar: false,
 }
 
@@ -48,12 +48,9 @@ export default class Textapp extends ResizableDiv {
     constructor(parent,properties){
         super(parent,properties);
 
-        
         this.textBox = document.createElement('textarea');
         this.div.append(this.textBox);
         this.textBox.className = 'textapp-textarea';
-
-
 
     }
 }

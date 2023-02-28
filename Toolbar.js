@@ -5,36 +5,34 @@ const button2Image = 'right-arrow.svg';
 
 
 export class ToolbarButton {
-    constructor(parent,innerContent,description,onClick,className) {
+    constructor(parent,innerContent,onClick,childrenInstanceArray = [],className = 'toolbar-named-button') {
         this.parent = parent;
 
         // this array holds a reference to the child button divs
         this.childrenDiv = [];
 
         this.innerContent = innerContent;
-        this.description = description;
 
         // create the wrapper div that will contain the button
-        this.wrapperDiv = document.createElement('div');
-        this.wrapperDiv.className = `toolbar-button-wrapper-div`;
-        this.parent.append(this.wrapperDiv);
+        this.innerDiv = document.createElement('div');
+        this.innerDiv.className = `toolbar-button-wrapper-div`;
+        this.parent.innerDiv.append(this.innerDiv);
     
         // create the button element and add it to the wrapper div
         this.element = document.createElement('button');
         this.element.className = className;
-        this.wrapperDiv.append(this.element);
+        this.innerDiv.append(this.element);
 
         // this function checks if the content inside is an svg or text and renders that
         this.validateInnerContent(this.innerContent);
 
         // this array will hold the reference to the children button instance if there are any
-        this.childrenInstanceArray = [];
+        this.childrenInstanceArray = childrenInstanceArray;
 
         // execute function passed down by user
         this.element.addEventListener('click',() => {
             onClick(this);
-        })
-        
+        });
     }
 
     validateInnerContent(innerContent) {
@@ -45,19 +43,38 @@ export class ToolbarButton {
             this.element.innerText = innerContent;
         } else {
             // add passed down image to button
-        this.element.innerHTML = `<img src="/static/svgs/${this.innerContent}" alt=${this.description} class="toolbar-button-img">`;
+        this.element.innerHTML = `<img src="/static/svgs/${this.innerContent}" class="toolbar-button-img">`;
         }
     }
 
     // if someone clicks on parent button, either hide or show children buttons
     toggleChildElements() {
         this.childrenInstanceArray.forEach((child) => {
-            if (child.wrapperDiv.style.display === "block") {
-                child.wrapperDiv.style.display = "none";
+            if (child.innerDiv.style.display === "block") {
+                child.innerDiv.style.display = "none";
             } else {
-                child.wrapperDiv.style.display = "block";
+                child.innerDiv.style.display = "block";
             };
         })
+    }
+
+    addChildButton(innerContent,onClick,...others) {
+        const newButton = new ToolbarButton(this,innerContent,onClick,this.childrenInstanceArray,);
+        console.log(this);
+        newButton.innerDiv.style.display = 'none';
+        this.childrenInstanceArray.push(newButton);
+        return {
+            "and": newButton,
+            // this should return the toolbar,so that you can keep adding parent buttons
+            "finally": this.childrenInstanceArray[0].parent.parent, 
+        };
+    };
+
+    addSubMenu(){
+        // this div will be used to append child buttons to it
+        this.innerDiv.addEventListener("mouseover", this.toggleChildElements());
+        this.innerDiv.className = 'toolbar-dropdown-div ';
+        return this;
     }
 }
 
@@ -69,7 +86,7 @@ class Navbar {
         this.innerDiv = document.createElement('div');
         this.navBarField = document.createElement('input');
 
-        this.parent.append(this.innerDiv);
+        this.parent.innerDiv.append(this.innerDiv);
         this.innerDiv.append(this.navBarField);
 
         this.innerDiv.className = 'navbar-inner-div';
@@ -79,7 +96,7 @@ class Navbar {
 
 
 export class Toolbar {
-    constructor(parent,buttonsObject,hasNavbar) {
+    constructor(parent,buttonsArray = [],hasNavbar = false) {
         this.parent = parent;
 
         this.div = document.createElement('div');
@@ -95,10 +112,10 @@ export class Toolbar {
         this.div.append(this.innerDiv);
 
         // render the buttons that are passed down as an arg, then return the references to the created button objects to this.parentButtons as an array
-        this.parentButtons = this.renderButtons(buttonsObject);
+        this.parentButtons = this.renderButtons(buttonsArray);
 
-        // create a navbar
-        hasNavbar === true ? this.navBar = new Navbar(this.innerDiv) : null;
+        // create a navbar if true bool is passed down
+        hasNavbar === true ? this.navBar = new Navbar(this.innerDiv) : this.navBar = null;
     }
 
     resize() {
@@ -106,22 +123,18 @@ export class Toolbar {
         this.div.style.bottom = intToPx(pxToInt(this.parent.computedStyle.height) - 30);
     }
 
-    renderButtonChildren(parentWrapperDiv,children) {
-        let dropdownDiv = document.createElement('div');
-        dropdownDiv.className = 'toolbar-dropdown-div';
-        parentWrapperDiv.append(dropdownDiv);
-
+    renderButtonChildren(parent,children) {
         let childrenToReturn = [];
 
         children.forEach((button) => {
             let newButton = new ToolbarButton(
-                dropdownDiv,
+                parent.dropdownDiv,
                 button.innerContent,
                 button.description,
                 button.function,
                 button.className,
             );
-            dropdownDiv.append(newButton.wrapperDiv);
+            parent.dropdownDiv.append(newButton.wrapperDiv);
             newButton.wrapperDiv.style.display = 'none';
 
             // add all of the children of the button to an array to be passed to the parent later.
@@ -132,10 +145,13 @@ export class Toolbar {
     }
 
     // buttons are passed down as an object of objects
-    renderButtons(buttons) {
+    renderButtons(buttonsArray) {
+        // if there are no buttons when toolbar is constructed do nothing
+        if (buttonsArray.length === 0) return this.parent;
+
         let buttonsToReturn = [];
 
-        buttons && buttons.forEach((button) => {
+        buttons.forEach((button) => {
             let newButton = new ToolbarButton(
                 this.innerDiv,
                 button.innerContent,
@@ -157,5 +173,21 @@ export class Toolbar {
 
         return buttonsToReturn;
     }
+
+    addNavBar() {
+        if (!this.navBar) {
+            this.navBar = new Navbar(this);
+            return this;
+        } else {
+            return this;
+        }
+    };
     
+    addToolBarButton(innerContent,onClick,...others) {
+        const newButton = new ToolbarButton(this,innerContent,onClick);
+        return {
+            "and": newButton,
+            "finally": this, 
+        };
+    };
 }
