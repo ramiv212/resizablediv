@@ -8,8 +8,6 @@ export class ToolbarButton {
     constructor(parent,innerContent,onClick,className = 'toolbar-named-button') {
         this.parent = parent;
 
-        console.log(this.parent)
-
         this.innerContent = innerContent;
 
         // create the wrapper div that will contain the button
@@ -27,6 +25,8 @@ export class ToolbarButton {
 
         this.childButtonArray = [];
         this.childrenAreHidden = true;
+
+        this.subMenuCount = 0;
 
         // execute function passed down by user
         this.element.addEventListener('click',() => {
@@ -60,6 +60,8 @@ export class ToolbarButton {
     showChildren() {
         this.childButtonArray.forEach((childButton) => {
             childButton.innerDiv.style.display = 'block';
+            childButton.parent.innerDiv.style.display = 'block';
+            console.log(childButton);
         });
         this.childrenAreHidden = false;
     };
@@ -83,9 +85,24 @@ export class ToolbarButton {
     };
 
     addSubMenu() {
-        const newSubMenu = new SubMenu(this);
+        const newSubMenu = new SubMenu(this,this.subMenuCount);
         this.innerDiv.append(newSubMenu.innerDiv);
         newSubMenu.innerDiv.style.display = 'none';
+
+        const subMenuParentButton = this.childButtonArray[this.subMenuCount];
+
+        // add an event listener to the sub menu parent to show the submenu children
+        subMenuParentButton.innerDiv.addEventListener('mouseenter',() => {
+            subMenuParentButton.showChildren();
+        });
+
+        // add and event listener to the sub menu parent to hide the children
+        subMenuParentButton.innerDiv.addEventListener('mouseleave',() => {
+            subMenuParentButton.hideChildren();
+        });
+
+        this.subMenuCount ++;
+
         return {
             and: newSubMenu,
             finally: this
@@ -95,8 +112,10 @@ export class ToolbarButton {
 }
 
 class SubMenu {
-    constructor(parent,width = 100) {
+    constructor(parent,count,width = 100) {
         this.parent = parent;
+
+        this.count = count;
 
         this.innerDiv = document.createElement('div');
         this.innerDiv.className = 'toolbar-dropdown-div';
@@ -105,13 +124,27 @@ class SubMenu {
         this.innerDiv.style.left = intToPx(width + 15);
         this.innerDiv.style.top = intToPx((this.parent.childButtonArray.length * 25) + 5);
 
-        this.childButtonArray = [];
     }
 
     addChildButton(innerContent,onClick,className = 'toolbar-named-button') {
         const newButton = new ToolbarButton(this,innerContent,onClick,className);
-        this.childButtonArray.push(newButton);
-        this.innerDiv.append(newButton.innerDiv)
+        this.innerDiv.append(newButton.innerDiv);
+
+        // this event listener is to keep the whole
+        // submenu open while the mouse is still on it
+        this.innerDiv.addEventListener('mouseenter',() => {
+            newButton.innerDiv.style.display = 'block';
+        });
+
+        this.innerDiv.addEventListener('mouseleave',() => {
+            newButton.innerDiv.style.display = 'none';
+        })
+
+        // add this button to the childbuttonlist array of the submenu parent
+        // since the actual parent of the submenu is the parent button,
+        // the submenu parent button needs to be indexed from the parent button childbuttonlist
+        this.parent.childButtonArray[this.count].childButtonArray.push(newButton);
+
         return {
             and: this,
             finally: this.parent

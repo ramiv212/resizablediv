@@ -41,6 +41,7 @@ body {
     align-items: center;
     justify-content: right;
 
+    background-color: rgb(239, 239, 239);
 
 }
 
@@ -60,7 +61,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    background-color: rgb(239, 239, 239);
+    background-color: whitesmoke;
 }
 
 .toolbar-inner {
@@ -104,7 +105,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: left;
-    background-color: rgb(239, 239, 239);
+    background-color: whitesmoke;
 }
 
 .toolbar-named-button {
