@@ -21,10 +21,10 @@ body {
 
 .anchor {
   position: absolute;
-  border-style: none;
+  border-color: transparent;
   border-radius: 50%;
   cursor: se-resize;
-  background-color: red;
+  background-color: transparent;
 }
 
 .topbar {

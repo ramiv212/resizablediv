@@ -4,6 +4,17 @@ const PretendOS = new Main();
 
 
 PretendOS.createNewWindow().render(PretendOS.app)
+    .addToolBar()
+    .addParentButton('File',() => (console.log('file'))).and
+        .addChildButton('New',() => (console.log('new'))).and
+            .addSubMenu().and
+            .addChildButton('Document',() => (console.log('open'))).and
+            .addChildButton('Window',() => (console.log('save'))).finally
+        .addChildButton('Open').and
+        .addChildButton('Save').finally
+    .addParentButton('Edit')
+
+
 
 
 // TODO refactor this so that the "Object" nodes are only added when

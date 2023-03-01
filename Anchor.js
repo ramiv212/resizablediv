@@ -22,9 +22,11 @@ export default class Anchor {
         // add div to to the parent element
         this.parent.div.append(this.div);
 
-        console.log(this.width)
+        // put the anchor at the bottom right of the window
         this.div.style.left = intToPx(this.parent.width - (this.width / 2));
         this.div.style.top = intToPx(this.parent.height - (this.height / 2));
+
+
         this.dragEventListener();
 
     }

@@ -100,6 +100,6 @@ export default class Topbar {
             //finally set the parent's width and height paramenter to their div's current width and height
             this.parent.width = pxToInt(this.parent.computedStyle.width);
             this.parent.height = pxToInt(this.parent.computedStyle.height);
-        })
+        });
     }
 }

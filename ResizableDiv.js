@@ -35,8 +35,6 @@ export default class ResizableDiv {
         // create an anchor for this div
         this.Anchor = new Anchor(this,30,30);
 
-        console.log(this.Anchor);
-
         // create the topbar
         this.Topbar = new Topbar(this);
 
