@@ -24,6 +24,7 @@ body {
   border-style: none;
   border-radius: 50%;
   cursor: se-resize;
+  background-color: red;
 }
 
 .topbar {

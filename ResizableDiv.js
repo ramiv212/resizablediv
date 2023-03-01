@@ -33,7 +33,9 @@ export default class ResizableDiv {
         this.computedStyle = getComputedStyle(this.div);
 
         // create an anchor for this div
-        this.Anchor = new Anchor(this,30,30)
+        this.Anchor = new Anchor(this,30,30);
+
+        console.log(this.Anchor);
 
         // create the topbar
         this.Topbar = new Topbar(this);
@@ -56,7 +58,7 @@ export default class ResizableDiv {
         this.div.style.height = intToPx(this.height - yOffset);
 
         this.Topbar.resize();
-        this.Toolbar.resize();
+        this.Toolbar?.resize();
 
     }
 

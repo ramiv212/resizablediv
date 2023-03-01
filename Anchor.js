@@ -2,10 +2,9 @@ import { intToPx,pxToInt } from "./helpers.js"
 
 export default class Anchor {
 
-    constructor(parent,width,height,position) {
+    constructor(parent,width,height) {
         this.width = width;
         this.height = height;
-        this.position = position;
 
         this.parent = parent;
 
@@ -23,8 +22,9 @@ export default class Anchor {
         // add div to to the parent element
         this.parent.div.append(this.div);
 
-
-        this.setPosition();
+        console.log(this.width)
+        this.div.style.left = intToPx(this.parent.width - (this.width / 2));
+        this.div.style.top = intToPx(this.parent.height - (this.height / 2));
         this.dragEventListener();
 
     }
@@ -87,7 +87,7 @@ export default class Anchor {
             this.parent.scale(xOffset,yOffset);
 
             // set the position of this anchor to mouse position as you drag
-            this.setPosition(e.x,e.y);
+            this.setPosition();
         });
 
         this.div.addEventListener('dragend',(e) => {

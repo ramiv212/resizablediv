@@ -8,8 +8,7 @@ export class ToolbarButton {
     constructor(parent,innerContent,onClick,childrenInstanceArray = [],className = 'toolbar-named-button') {
         this.parent = parent;
 
-        // this array holds a reference to the child button divs
-        this.childrenDiv = [];
+        console.log(this)
 
         this.innerContent = innerContent;
 
@@ -57,24 +56,18 @@ export class ToolbarButton {
             };
         })
     }
+}
 
-    addChildButton(innerContent,onClick,...others) {
-        const newButton = new ToolbarButton(this,innerContent,onClick,this.childrenInstanceArray,);
-        console.log(this);
-        newButton.innerDiv.style.display = 'none';
-        this.childrenInstanceArray.push(newButton);
-        return {
-            "and": newButton,
-            // this should return the toolbar,so that you can keep adding parent buttons
-            "finally": this.childrenInstanceArray[0].parent.parent, 
-        };
-    };
+class SubMenu {
+    constructor(parent,width = 100) {
+        this.parent = parent;
 
-    addSubMenu(){
-        // this div will be used to append child buttons to it
-        this.innerDiv.addEventListener("mouseover", this.toggleChildElements());
-        this.innerDiv.className = 'toolbar-dropdown-div ';
-        return this;
+        this.innerDiv = document.createElement('div');
+        this.innerDiv.className = 'toolbar-dropdown-div';
+        this.innerDiv.style.minWidth = intToPx(width);
+        this.innerDiv.style.position = 'absolute';
+        this.innerDiv.style.left = intToPx(width + 15);
+        this.innerDiv.style.top = intToPx((this.parent.childrenInstanceArray.length * 25) + 5);
     }
 }
 
@@ -174,20 +167,5 @@ export class Toolbar {
         return buttonsToReturn;
     }
 
-    addNavBar() {
-        if (!this.navBar) {
-            this.navBar = new Navbar(this);
-            return this;
-        } else {
-            return this;
-        }
-    };
     
-    addToolBarButton(innerContent,onClick,...others) {
-        const newButton = new ToolbarButton(this,innerContent,onClick);
-        return {
-            "and": newButton,
-            "finally": this, 
-        };
-    };
 }
