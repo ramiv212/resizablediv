@@ -26,13 +26,12 @@ export class ToolbarButton {
         this.validateInnerContent(this.innerContent);
 
         this.childButtonArray = [];
+        this.childrenAreHidden = true;
 
         // execute function passed down by user
         this.element.addEventListener('click',() => {
             onClick(this);
         });
-
-        this.renderChildren();
     }
 
     validateInnerContent(innerContent) {
@@ -47,17 +46,23 @@ export class ToolbarButton {
         }
     }
 
-    renderChildren() {
+    toggleChildren() {
+        let hidden = true;
         this.childButtonArray.forEach((childButton) => {
-            console.log(childButton)
-            this.parent.innerDiv.append(childButton.innerDiv);
+            if (this.childrenAreHidden) {
+                childButton.innerDiv.style.display = 'block'; 
+            }
+            else {childButton.innerDiv.style.display = 'none';
+            };
         });
+        this.childrenAreHidden = !this.childrenAreHidden;
     }
 
     addChildButton(innerContent,onClick,className = 'toolbar-named-button') {
         const newButton = new ToolbarButton(this,innerContent,onClick,className);
         this.childButtonArray.push(newButton);
         this.innerDiv.append(newButton.innerDiv)
+        newButton.innerDiv.style.display = 'none';
         return {
             and: this,
             finally: this.parent
@@ -66,7 +71,8 @@ export class ToolbarButton {
 
     addSubMenu() {
         const newSubMenu = new SubMenu(this);
-        this.innerDiv.append(newSubMenu.innerDiv)
+        this.innerDiv.append(newSubMenu.innerDiv);
+        newSubMenu.innerDiv.style.display = 'none';
         return {
             and: newSubMenu,
             finally: this
@@ -147,7 +153,7 @@ export class Toolbar {
     addParentButton(innerContent,onClick,className = 'toolbar-named-button') {
         const newButton = new ToolbarButton(this,innerContent,onClick,className);
         this.innerDiv.append(newButton.innerDiv);
-
+        
         return {
             and: newButton,
             finally: this,

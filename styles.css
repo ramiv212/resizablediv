@@ -116,10 +116,6 @@ body {
     background-color: transparent;
 }
 
-.toolbar-named-button-child {
-    border: none;
-}
-
 .toolbar-dropdown-div {
     min-width: 100px;
     display: flex;

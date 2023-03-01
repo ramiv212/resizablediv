@@ -5,19 +5,21 @@ const PretendOS = new Main();
 
 PretendOS.createNewWindow().render(PretendOS.app)
     .addToolBar()
-    .addParentButton('File',() => (console.log('file'))).and
+    .addParentButton('File',(buttonInstance) => {buttonInstance.toggleChildren()}).and
         .addChildButton('New',() => (console.log('new'))).and
             .addSubMenu().and
-            .addChildButton('Document',() => (console.log('open'))).and
+            .addChildButton('Doc',() => (console.log('open'))).and
             .addChildButton('Window',() => (console.log('save'))).finally
         .addChildButton('Open').and
         .addChildButton('Save').finally
-    .addParentButton('Edit')
+    .addParentButton('Edit',(buttonInstance) => (buttonInstance.toggleChildren())).and
+        .addChildButton('Font')
 
 
 
 
 // TODO refactor this so that the "Object" nodes are only added when
+// TODO make it to when you click on one parent button it hides the other parent's buttons
 // chaining methods and then ultimately everything will be rendered
 // at the end. Effectively a virtual DOM?
 
