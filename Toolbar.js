@@ -47,16 +47,29 @@ export class ToolbarButton {
     }
 
     toggleChildren() {
-        let hidden = true;
+        this.childrenAreHidden = !this.childrenAreHidden;
         this.childButtonArray.forEach((childButton) => {
             if (this.childrenAreHidden) {
-                childButton.innerDiv.style.display = 'block'; 
+                childButton.innerDiv.style.display = 'none'; 
             }
-            else {childButton.innerDiv.style.display = 'none';
+            else {childButton.innerDiv.style.display = 'block';
             };
         });
-        this.childrenAreHidden = !this.childrenAreHidden;
-    }
+    };
+
+    showChildren() {
+        this.childButtonArray.forEach((childButton) => {
+            childButton.innerDiv.style.display = 'block';
+        });
+        this.childrenAreHidden = false;
+    };
+
+    hideChildren() {
+        this.childButtonArray.forEach((childButton) => {
+            childButton.innerDiv.style.display = 'none';
+        });
+        this.childrenAreHidden = true;
+    };
 
     addChildButton(innerContent,onClick,className = 'toolbar-named-button') {
         const newButton = new ToolbarButton(this,innerContent,onClick,className);
@@ -67,7 +80,7 @@ export class ToolbarButton {
             and: this,
             finally: this.parent
         }
-    }
+    };
 
     addSubMenu() {
         const newSubMenu = new SubMenu(this);
