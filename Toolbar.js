@@ -5,10 +5,12 @@ const button2Image = 'right-arrow.svg';
 
 
 export class ToolbarButton {
-    constructor(parent,innerContent,onClick,className = 'toolbar-named-button') {
+    constructor(parent,innerContent,onClick,allButtonsSet,className = 'toolbar-named-button') {
         this.parent = parent;
-
         this.innerContent = innerContent;
+        this.allButtonsSet = allButtonsSet;
+        console.log(this.allButtonsSet)
+        allButtonsSet.add(this);
 
         // create the wrapper div that will contain the button
         this.innerDiv = document.createElement('div');
@@ -23,6 +25,7 @@ export class ToolbarButton {
         // this function checks if the content inside is an svg or text and renders that
         this.validateInnerContent(this.innerContent);
 
+
         this.childButtonArray = [];
         this.childrenAreHidden = true;
 
@@ -30,6 +33,7 @@ export class ToolbarButton {
 
         // execute function passed down by user
         this.element.addEventListener('click',() => {
+            this.hideAllOtherChildren();
             onClick(this);
         });
     }
@@ -72,8 +76,16 @@ export class ToolbarButton {
         this.childrenAreHidden = true;
     };
 
+    // hide the children of all buttons except the one you
+    // clicked on
+    hideAllOtherChildren() {
+        this.allButtonsSet.forEach((button) => {
+            if (button !== this) button.hideChildren();
+        })
+    }
+
     addChildButton(innerContent,onClick,className = 'toolbar-named-button') {
-        const newButton = new ToolbarButton(this,innerContent,onClick,className);
+        const newButton = new ToolbarButton(this,innerContent,onClick,this.allButtonsSet,className);
         this.childButtonArray.push(newButton);
         this.innerDiv.append(newButton.innerDiv);
 
@@ -85,7 +97,7 @@ export class ToolbarButton {
     };
 
     addSubMenu() {
-        const newSubMenu = new SubMenu(this,this.subMenuCount);
+        const newSubMenu = new SubMenu(this,this.allButtonsSet,this.subMenuCount);
         this.innerDiv.append(newSubMenu.innerDiv);
         newSubMenu.innerDiv.style.display = 'none';
 
@@ -112,9 +124,9 @@ export class ToolbarButton {
 }
 
 class SubMenu {
-    constructor(parent,count,width = 75) {
+    constructor(parent,allButtonsSet,count,width = 75) {
         this.parent = parent;
-
+        this.allButtonsSet = allButtonsSet;
         this.count = count;
 
         this.innerDiv = document.createElement('div');
@@ -127,7 +139,7 @@ class SubMenu {
     }
 
     addChildButton(innerContent,onClick,className = 'toolbar-named-button') {
-        const newButton = new ToolbarButton(this,innerContent,onClick,className);
+        const newButton = new ToolbarButton(this,innerContent,onClick,this.allButtonsSet,className);
         this.innerDiv.append(newButton.innerDiv);
 
         // this event listener is to keep the whole
@@ -170,7 +182,7 @@ class Navbar {
 
 
 export class Toolbar {
-    constructor(parent,buttonsArray = [],hasNavbar = false) {
+    constructor(parent,hasNavbar = false) {
         this.parent = parent;
 
         this.div = document.createElement('div');
@@ -185,13 +197,20 @@ export class Toolbar {
         this.parent.div.append(this.div);
         this.div.append(this.innerDiv);
 
+        this.allButtonsSet = new Set();
 
         // create a navbar if true bool is passed down
         hasNavbar === true ? this.navBar = new Navbar(this.innerDiv) : this.navBar = null;
 
+        // this function forces all buttons to hide their children
+        // when not clickin on a button. It iterates over a set
+        // that holds references to all buttons in this window
+        // and calls the hidechildren method on all of them.
         this.parent.div.addEventListener('click',(e) => {
-            if (e.target.className === 'toolbar-named-button') {
-                // this will be to hide menus when clicking on the window
+            if (e.target.className !== 'toolbar-named-button') {
+                this.allButtonsSet.forEach((button) => {
+                    button.hideChildren();
+                });
             };
         });
     }
@@ -203,7 +222,7 @@ export class Toolbar {
 
 
     addParentButton(innerContent,onClick,className = 'toolbar-named-button') {
-        const newButton = new ToolbarButton(this,innerContent,onClick,className);
+        const newButton = new ToolbarButton(this,innerContent,onClick,this.allButtonsSet,className);
         this.innerDiv.append(newButton.innerDiv);
         
         return {

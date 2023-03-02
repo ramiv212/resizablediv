@@ -36,11 +36,11 @@ export default class ResizableDiv {
         this.Anchor = new Anchor(this,30,30);
 
         // create the topbar
-        this.Topbar = new Topbar(this);
+        this.topbar = new Topbar(this);
 
         // empty variable to be filled with toolbar object if it is added
         // with the toolbar method
-        this.Toolbar = null;
+        this.toolbar = null;
 
         // add a click event listener to focus on the window
         
@@ -55,8 +55,8 @@ export default class ResizableDiv {
         this.div.style.width = intToPx(this.width - xOffset);
         this.div.style.height = intToPx(this.height - yOffset);
 
-        this.Topbar.resize();
-        this.Toolbar?.resize();
+        this.topbar.resize();
+        this.toolbar?.resize();
 
     }
 
