@@ -117,12 +117,19 @@ body {
     background-color: transparent;
 }
 
+.toolbar-named-button:hover {
+    background-color:lavender;
+}
+
 .toolbar-dropdown-div {
     min-width: 100px;
     display: flex;
     align-items: start;
     justify-content: left;
     flex-direction: column;
+
+    border-left-style: inset;
+    border-left-width: 2px;
 }
 
 .toolbar-submenu {

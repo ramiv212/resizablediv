@@ -8,8 +8,8 @@ PretendOS.createNewWindow().render(PretendOS.app)
     .addParentButton('File',(buttonInstance) => {buttonInstance.toggleChildren()}).and
         .addChildButton('New',() => (console.log('new'))).and
             .addSubMenu().and
-            .addChildButton('Doc',() => (console.log('open'))).and
-            .addChildButton('Window',() => (console.log('save'))).finally
+            .addChildButton('Doc',() => (console.log('doc'))).and
+            .addChildButton('Window',() => (console.log('window'))).finally
         .addChildButton('Open').and
         .addChildButton('Save').finally
     .addParentButton('Edit',(buttonInstance) => (buttonInstance.toggleChildren())).and

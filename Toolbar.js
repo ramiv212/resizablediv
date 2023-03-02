@@ -61,7 +61,6 @@ export class ToolbarButton {
         this.childButtonArray.forEach((childButton) => {
             childButton.innerDiv.style.display = 'block';
             childButton.parent.innerDiv.style.display = 'block';
-            console.log(childButton);
         });
         this.childrenAreHidden = false;
     };
@@ -76,7 +75,8 @@ export class ToolbarButton {
     addChildButton(innerContent,onClick,className = 'toolbar-named-button') {
         const newButton = new ToolbarButton(this,innerContent,onClick,className);
         this.childButtonArray.push(newButton);
-        this.innerDiv.append(newButton.innerDiv)
+        this.innerDiv.append(newButton.innerDiv);
+
         newButton.innerDiv.style.display = 'none';
         return {
             and: this,
@@ -112,7 +112,7 @@ export class ToolbarButton {
 }
 
 class SubMenu {
-    constructor(parent,count,width = 100) {
+    constructor(parent,count,width = 75) {
         this.parent = parent;
 
         this.count = count;
@@ -121,7 +121,7 @@ class SubMenu {
         this.innerDiv.className = 'toolbar-dropdown-div';
         this.innerDiv.style.minWidth = intToPx(width);
         this.innerDiv.style.position = 'absolute';
-        this.innerDiv.style.left = intToPx(width + 15);
+        this.innerDiv.style.left = intToPx(width * 1.5);
         this.innerDiv.style.top = intToPx((this.parent.childButtonArray.length * 25) + 5);
 
     }
@@ -188,6 +188,12 @@ export class Toolbar {
 
         // create a navbar if true bool is passed down
         hasNavbar === true ? this.navBar = new Navbar(this.innerDiv) : this.navBar = null;
+
+        this.parent.div.addEventListener('click',(e) => {
+            if (e.target.className === 'toolbar-named-button') {
+                // this will be to hide menus when clicking on the window
+            };
+        });
     }
 
     resize() {
